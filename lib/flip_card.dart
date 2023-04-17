@@ -163,14 +163,14 @@ class FlipCardState extends State<FlipCard>
     widget.controller?.state = this;
 
     if (widget.autoFlipDuration != null) {
-      Future.delayed(widget.autoFlipDuration!, toggleCard);
+      Future.delayed(widget.autoFlipDuration!, flip);
     }
   }
 
   /// Flips the card or reverses the direction of the current animation
   ///
   /// This function will complete when animation is done
-  Future<void> toggleCard() async {
+  Future<void> flip() async {
     if (!mounted) return;
     widget.onFlip?.call();
 
@@ -189,8 +189,9 @@ class FlipCardState extends State<FlipCard>
   }
 
   /// Flip the card without playing an animation.
+  ///
   /// This cancels any ongoing animation.
-  void toggleCardWithoutAnimation() {
+  void flipWithoutAnimation() {
     controller.stop();
     widget.onFlip?.call();
 
@@ -223,7 +224,7 @@ class FlipCardState extends State<FlipCard>
     if (widget.flipOnTouch) {
       return GestureDetector(
         behavior: HitTestBehavior.translucent,
-        onTap: toggleCard,
+        onTap: flip,
         child: child,
       );
     }
